@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, redirect, url_for, flash
-from flask.ext.script import Manager
+
 from flask.ext.bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
@@ -7,11 +7,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import  DataRequired
 from flask_sqlalchemy import SQLAlchemy
 import os
-from flask_migrate import Migrate, MigrateCommand
-
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hahahahahahahahahaha0000'
@@ -19,16 +15,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'data.
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
-
 db = SQLAlchemy(app)
-migrate = Migrate(app,db)
-manager.add_command('db',MigrateCommand)
 
 class Role(db.Model):
-    __tablename__ = 'roles'
+    __tablename__ = 'roles' 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     users = db.relationship('User', backref= 'role', lazy='dynamic')
@@ -74,6 +66,3 @@ def user(name):
 def page_not_found(e):
     return render_template('404.html'), 404
 
-
-if __name__ == '__main__':
-    manager.run()
