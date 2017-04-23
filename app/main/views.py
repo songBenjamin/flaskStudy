@@ -8,16 +8,9 @@ from .forms import NameFrom
 
 @main.route('/',methods=['GET','POST'])
 def index():
-    form = NameFrom()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.name.data).first()
-        if user is None:
-            user = User(username = form.name.data)
-            db.session.add(user)
-            session['known'] = False
+    return  render_template('index.html')
 
-        else:
-            session['known'] = True
-        session['name'] = form.name.data
-    return  render_template('index.html',form=form,name = session.get('name'),
-                            known=session.get('known',False))
+@main.route('/user/<username>')
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user.html',user=user)

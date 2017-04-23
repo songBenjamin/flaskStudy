@@ -4,6 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hlasdjflaksjfkl'
     SQLALCHEMY_COMMIT_ON_TRARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASK_MAIL_SUBJECT_PREFIX = '[Flask]'
     FLASK_SENDER = 'asldkfjl@hh.com'
     FLASK_DAMIN = os.environ.get('FLASK_ADMIN')
